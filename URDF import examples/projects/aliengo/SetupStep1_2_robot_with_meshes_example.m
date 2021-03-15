@@ -33,8 +33,8 @@ SRD_LinkSet_Color(LinkArray, 'RL_foot', Color_2);
 % SRD_LinkSet_Color(LinkArray, 'RH_FOOT', Color_2);
 
 
-% InitialPosition = zeros(12,1);
-InitialPosition = [0, 0, pi/2, 0, 0, pi/2, 0, 0, pi/2, 0, 0, pi/2]';
+% InitialPosition = zeros(13,1);
+InitialPosition = [zeros(6,1)',0, 0, pi/2, 0, 0, pi/2, 0, 0, pi/2, 0, 0, pi/2]';
 
 
 SRD_save(LinkArray, 'LinkArray');

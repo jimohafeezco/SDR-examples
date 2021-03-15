@@ -67,10 +67,12 @@
       <inertia ixx="0.011253" ixy="0" ixz="0.0" iyy="0.036203" iyz="-0.0" izz="0.042673"/>
     </inertial>
   </link>
-  <joint name="trunk_to_trunk_inertia" type="fixed">
+  <joint name="trunk_to_trunk_inertia_floating" type="revoluteeee">
     <origin rpy="0 0 0" xyz="0 0 0"/>
     <parent link="trunk"/>
     <child link="trunk_interia"/>
+      <limit effort="20" lower="-0.872664625997" upper="1.0471975512" velocity="10.6"/>
+
   </joint>
   <!-- 
     <joint name="imu_joint" type="fixed">

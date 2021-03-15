@@ -1,21 +1,22 @@
 close all; clc; clear all;
 
-path{1} = 'anymal';
+path{4} = 'anymal';
 
 path{2} = 'aliengo'; %% 4 legs
 path{3} = 'cheetah';
-% path{3} = 'anymal';
-path{4} = 'laikago';
-path{5} = 'hexapod';    %%6 legs
+path{5} = 'anymal';
+path{1} = 'laikago';
+% path{5} = 'hexapod';    %%6 legs
+% path{1}='/home/hafeez/MATLAB_ws/SDR-examples/Three link'
 
-controllers = {'CTC', 'CLQR','Nested_QP'};
+controllers = {'CTC', 'CLQR'};
 % controllers = {'Nested_QP'};
 
 metric = zeros(length(path),length(controllers));
 omega = 25;
 
-parameters.Kp = omega^2;
-parameters.Kd = 2*omega;
+parameters.Kp =500;
+parameters.Kd = 100;
 
 
 for i = 1:length(path)

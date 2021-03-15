@@ -28,7 +28,10 @@ d = SRD_dynamics_derive_GeneralizedDissipativeForces_uniform(...
 %NaiveControlMap
 T = SRD_dynamics_derive_ControlMap_eye(...
     'SymbolicEngine', SymbolicEngine);
-
+% 
+% T = SRD_dynamics_derive_FloatingBase_ControlMap_eye(...
+%     'SymbolicEngine', SymbolicEngine);
+% 
 description = SRD_generate_dynamics_generalized_coordinates_model(...
     'SymbolicEngine', SymbolicEngine, ...
     'H', H, ...
@@ -43,8 +46,6 @@ description = SRD_generate_dynamics_generalized_coordinates_model(...
 
 Handler_dynamics_generalized_coordinates_model = SRD_get_handler__dynamics_generalized_coordinates_model('description', description);
 SRD_save(Handler_dynamics_generalized_coordinates_model, 'Handler_dynamics_generalized_coordinates_model');
-
-
 
 
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -70,10 +71,10 @@ SRD_save(Handler_dynamics_Linearized_Model, 'Handler_dynamics_Linearized_Model')
 
 %%%%%%%%%%%%
 %construct constraint
-c1 = SymbolicEngine.LinkArray(4).AbsoluteFollower(:);
-c2 = SymbolicEngine.LinkArray(8).AbsoluteFollower(:);
-c3 = SymbolicEngine.LinkArray(12).AbsoluteFollower(:);
-c4 = SymbolicEngine.LinkArray(16).AbsoluteFollower(:);
+c1 = SymbolicEngine.LinkArray(5).AbsoluteFollower(:);
+c2 = SymbolicEngine.LinkArray(9).AbsoluteFollower(:);
+c3 = SymbolicEngine.LinkArray(13).AbsoluteFollower(:);
+c4 = SymbolicEngine.LinkArray(17).AbsoluteFollower(:);
 
 constraint = [c1; c2];
 %%%%%%%%%
@@ -101,10 +102,8 @@ SRD_save(Handler_Constraints_Model, 'Handler_Constraints_Model');
 %construct inverse kinematics task
 
 CoM = SRD_get_CoM_ForLinkArray('SymbolicEngine', SymbolicEngine);
-
-
 % Task = [constraint; CoM]; 
-Task =[c3; CoM];
+Task =[c3;CoM];
 %%%%%%%%%
 
 description = SRD_generate_second_derivative_Jacobians('SymbolicEngine', SymbolicEngine, ...

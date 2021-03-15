@@ -4,12 +4,12 @@ clear; close all;
 InitialPosition = SRD_get('InitialPosition');
 Handler_IK_Model = SRD_get('Handler_IK_Model');
 IC_Task = Handler_IK_Model.get_Task(InitialPosition);
-ZeroOrderDerivativeNodes = {IC_Task(1), IC_Task(1)+0.004;
-                            IC_Task(2), IC_Task(2)+0.004;  
-                            IC_Task(3), IC_Task(3)+0.003;  
-                            IC_Task(4), IC_Task(4)+0.001;  
-                            IC_Task(5), IC_Task(5)+0.005;  
-                            IC_Task(6), IC_Task(6)+0.005};  
+ZeroOrderDerivativeNodes = {IC_Task(1), IC_Task(1)+0.04;
+                            IC_Task(2), IC_Task(2)+0.04;  
+                            IC_Task(3), IC_Task(3)+0.04;  
+                            IC_Task(4), IC_Task(4)+0.05;  
+                            IC_Task(5), IC_Task(5)+0.05;  
+                            IC_Task(6), IC_Task(6)+0.05};  
                         
 FirstOrderDerivativeNodes = {0, 0; 
                              0, 0;  

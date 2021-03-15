@@ -56,10 +56,22 @@ Handler_Desired_State_StateSpace = SRD_get_handler__StateConverter_GenCoord2Stat
 % %
 % %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Handler_InverseDynamics = SRD_get_handler__InverseDynamics_Vanilla__desired_trajectory(...
+% Handler_InverseDynamics = SRD_get_handler__InverseDynamics_Vanilla__desired_trajectory(...
+%     'Handler_ControlInput', Handler_Desired_State, ...
+%     'Handler_dynamics_generalized_coordinates_model', Handler_dynamics_GC_model_evaluator, ...
+%     'Handler_Simulation', Handler_Simulation);
+Handler_InverseDynamics = SRD_get_handler__InverseDynamicsConstrained_QR(...
     'Handler_ControlInput', Handler_Desired_State, ...
-    'Handler_dynamics_generalized_coordinates_model', Handler_dynamics_GC_model_evaluator, ...
+    'Handler_dynamics_generalized_coordinates_model', Handler_dynamics_generalized_coordinates_model, ...
+    'Handler_Constraints_Model', Handler_Constraints_Model, ...
     'Handler_Simulation', Handler_Simulation);
+
+
+% Handler_InverseDynamics = SRD_get_handler__InverseDynamicsConstrained_QR(...
+%     'Handler_ControlInput', Handler_Desired_State, ...
+%     'Handler_dynamics_generalized_coordinates_model', Handler_dynamics_generalized_coordinates_model, ...
+%     'Handler_Constraints_Model', Handler_Constraints_Model, ...
+%     'Handler_Simulation', Handler_Simulation);
 
 Handler_ComputedTorqueController = SRD_get_handler__ComputedTorqueController(...
     'Handler_State', Handler_State, ...
@@ -76,9 +88,7 @@ Handler_NestedQP = SRD_get_handler__NestedQP(...
     'Handler_dynamics_generalized_coordinates_model', Handler_dynamics_GC_model_evaluator, ...
     'Handler_Simulation', Handler_Simulation, ...
     'Handler_Constraints_Model', Handler_Constraints_Model, ...
-    'Handler_InverseDynamics', Handler_InverseDynamics, ...
-    'Kp', 500*eye(Handler_Desired_State.dof_robot), ...
-    'Kd', 100*eye(Handler_Desired_State.dof_robot));
+    'Handler_InnerController', Handler_ComputedTorqueController);
 % Handler_LQR = SRD_get_handler__LQR_Controller(...
 %     'Handler_State_StateSpace', Handler_State_StateSpace, ...
 %     'Handler_ControlInput_StateSpace', Handler_Desired_State_StateSpace, ...
@@ -101,14 +111,14 @@ Handler_LQR = SRD_get_handler__Constrained_LQR_Controller(...
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % %
-if control == "CTC"
-    MainController = Handler_ComputedTorqueController;
-elseif control == "CLQR"
-    MainController = Handler_LQR;
-else
-    MainController = Handler_NestedQP;
+switch(control) 
+    case "CTC"
+        MainController = Handler_ComputedTorqueController;
+    case "CLQR"
+        MainController = Handler_LQR;
+    case "qp"
+        MainController = Handler_NestedQP;
 end
-
 Handler_dynamics_Linear_model_evaluator.Handler_Controller = Handler_InverseDynamics;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -152,12 +162,13 @@ Handler_SimulationTickDisplay = SRD_get_handler__SimulationTickDisplay(...
 Handler_Simulation.PreprocessingHandlersArray = {Handler_Desired_State, Handler_State_StateSpace, Handler_Desired_State_StateSpace, ...
     Handler_dynamics_GC_model_evaluator};
 % Handler_Simulation.ControllerArray = {Handler_InverseDynamics, MainController};
-if control == "CTC"
-    Handler_Simulation.ControllerArray = {Handler_InverseDynamics, Handler_ComputedTorqueController};
-elseif control == "CLQR"
-    Handler_Simulation.ControllerArray = {Handler_InverseDynamics, Handler_dynamics_Linear_model_evaluator, Handler_LQR};
-else
-    Handler_Simulation.ControllerArray = {Handler_InverseDynamics, Handler_NestedQP};
+switch(control) 
+    case "CTC"
+        Handler_Simulation.ControllerArray = {Handler_InverseDynamics, Handler_ComputedTorqueController};
+    case "CLQR"
+        Handler_Simulation.ControllerArray = {Handler_InverseDynamics, Handler_dynamics_Linear_model_evaluator, Handler_LQR};
+    case "qp"
+        Handler_Simulation.ControllerArray = {Handler_InverseDynamics, Handler_ComputedTorqueController, Handler_NestedQP};
 end
 % Handler_Simulation.ControllerArray = {Handler_InverseDynamics, Handler_ComputedTorqueController};
 % Handler_Simulation.ControllerArray = {Handler_InverseDynamics, Handler_dynamics_Linear_model_evaluator, Handler_LQR};
@@ -175,11 +186,11 @@ output = Handler_State_Logger_vanilla;
 N = length(Handler_State_Logger_vanilla.Log.q);
 n_joints=Handler_Desired_State.dof_robot;
 answer = zeros(n_joints,1);
+
 for ii=1:n_joints
     answer(ii,1)=norm(output.Log.q(1:end-1,ii)-desired.q(ii));
 end
 mse = sum(answer)/N;
-
 % SRD_save(Handler_State_Logger_vanilla, 'Handler_State_Logger_vanilla');
 % SRD_save(Handler_Desired_State, 'Handler_Desired_State');
 

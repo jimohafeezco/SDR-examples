@@ -2,7 +2,7 @@ close all; clear; clear classes; clc
 SRD = SRDuserinterface;
 
 
-LinkArray = SRD_GetLinkArrayFromURDF('UrdfFilePath','../../robots_library/laika/urdf/laikago.urdf','ParseSTL',true);
+LinkArray = SRD_GetLinkArrayFromURDF('UrdfFilePath','../../robots_library/laikago/urdf/laikago.urdf','ParseSTL',true);
 
 Color_0 = [1, 0, 0];
 Color_1 = [0.95, 0.5, 0.3];
@@ -33,15 +33,15 @@ SRD_LinkSet_Color(LinkArray, 'RL_calf', Color_3);
 SRD_LinkSet_Color(LinkArray, 'RL_foot', Color_2);
 % SRD_LinkSet_Color(LinkArray, 'RH_FOOT', Color_2);
 
-InitialPosition = [0, 0, pi/2, 0, 0, pi/2, 0, 0, pi/2, 0, 0, pi/2]';
-
+InitialPosition = [zeros(6,1)',0, 0, pi/2, 0, 0, pi/2, 0, 0, pi/2, 0, 0, pi/2]';
+% InitialPosition = zeros(18,1);
 
 SRD_save(LinkArray, 'LinkArray');
 SRD_save(InitialPosition, 'InitialPosition');
 
 Chain = SRD_Chain(LinkArray);
 SRD_save(Chain, 'Chain');
-%Chain.Update(InitialPosition)
+Chain.Update(InitialPosition)
 
 
 SRD_SetupVisuals('AxisLimits', [-1; 1; -1; 1; -1; 1], ...

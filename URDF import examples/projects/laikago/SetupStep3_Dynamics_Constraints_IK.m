@@ -72,9 +72,9 @@ SRD_save(Handler_dynamics_Linearized_Model, 'Handler_dynamics_Linearized_Model')
 %construct constraint
 
 
-c1 = SymbolicEngine.LinkArray(6).AbsoluteFollower(:);
-c3 = SymbolicEngine.LinkArray(16).AbsoluteFollower(:);
-c4 = SymbolicEngine.LinkArray(21).AbsoluteFollower(:);
+c1 = SymbolicEngine.LinkArray(7).AbsoluteFollower(:);
+c3 = SymbolicEngine.LinkArray(17).AbsoluteFollower(:);
+c4 = SymbolicEngine.LinkArray(22).AbsoluteFollower(:);
 c2 = SymbolicEngine.LinkArray(11).AbsoluteFollower(:);
 c11 = SymbolicEngine.LinkArray(6).AbsoluteFollower(2);
 c21 = SymbolicEngine.LinkArray(11).AbsoluteFollower(2);

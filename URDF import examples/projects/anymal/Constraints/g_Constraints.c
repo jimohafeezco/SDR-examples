@@ -46,11 +46,11 @@ extern "C" {
   #endif
 #endif
 
-static const casadi_int casadi_s0[16] = {12, 1, 0, 12, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
+static const casadi_int casadi_s0[22] = {18, 1, 0, 18, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17};
 static const casadi_int casadi_s1[10] = {6, 1, 0, 6, 0, 1, 2, 3, 4, 5};
-static const casadi_int casadi_s2[31] = {6, 12, 0, 2, 5, 8, 10, 13, 16, 16, 16, 16, 16, 16, 16, 1, 2, 0, 1, 2, 0, 1, 2, 4, 5, 3, 4, 5, 3, 4, 5};
+static const casadi_int casadi_s2[37] = {6, 18, 0, 2, 5, 8, 10, 13, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 1, 2, 0, 1, 2, 0, 1, 2, 4, 5, 3, 4, 5, 3, 4, 5};
 
-/* g_Constraint:(q[12])->(Task[6]) */
+/* g_Constraint:(q[18])->(Task[6]) */
 static int casadi_f0(const casadi_real** arg, casadi_real** res, casadi_int* iw, casadi_real* w, int mem) {
   casadi_real a0, a1, a10, a11, a12, a13, a14, a15, a16, a17, a18, a19, a2, a20, a21, a3, a4, a5, a6, a7, a8, a9;
   a0=3.4050000000000002e-01;
@@ -311,7 +311,7 @@ CASADI_SYMBOL_EXPORT int g_Constraint_work(casadi_int *sz_arg, casadi_int* sz_re
   return 0;
 }
 
-/* g_Constraint_Jacobian:(q[12])->(TaskJacobian[6x12,16nz]) */
+/* g_Constraint_Jacobian:(q[18])->(TaskJacobian[6x18,16nz]) */
 static int casadi_f1(const casadi_real** arg, casadi_real** res, casadi_int* iw, casadi_real* w, int mem) {
   casadi_real a0, a1, a10, a11, a12, a13, a14, a15, a16, a17, a18, a19, a2, a20, a21, a22, a23, a3, a4, a5, a6, a7, a8, a9;
   a0=9.9999999999999978e-02;
@@ -753,7 +753,7 @@ CASADI_SYMBOL_EXPORT int g_Constraint_Jacobian_work(casadi_int *sz_arg, casadi_i
   return 0;
 }
 
-/* g_Constraint_Jacobian_derivative:(q[12],v[12])->(TaskJacobian_derivative[6x12,16nz]) */
+/* g_Constraint_Jacobian_derivative:(q[18],v[18])->(TaskJacobian_derivative[6x18,16nz]) */
 static int casadi_f2(const casadi_real** arg, casadi_real** res, casadi_int* iw, casadi_real* w, int mem) {
   casadi_real a0, a1, a10, a11, a12, a13, a14, a15, a16, a17, a18, a19, a2, a20, a21, a22, a23, a24, a25, a26, a27, a28, a29, a3, a30, a31, a32, a33, a34, a35, a36, a4, a5, a6, a7, a8, a9;
   a0=-3.2125000000000004e-01;

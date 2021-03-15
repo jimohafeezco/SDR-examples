@@ -33,7 +33,7 @@ SRD_LinkSet_Color(LinkArray, 'RL_foot', Color_2);
 % SRD_LinkSet_Color(LinkArray, 'RH_FOOT', Color_2);
 
 
-InitialPosition = zeros(12,1);
+InitialPosition = zeros(18,1);
 % InitialPosition = [0, 0, pi/2, 0, 0, pi/2, 0, 0, pi/2, 0, 0, pi/2]';
 
 
@@ -42,7 +42,7 @@ SRD_save(InitialPosition, 'InitialPosition');
 
 Chain = SRD_Chain(LinkArray);
 SRD_save(Chain, 'Chain');
-%Chain.Update(InitialPosition)
+Chain.Update(InitialPosition)
 
 
 SRD_SetupVisuals('AxisLimits', [-1; 1; -1; 1; -1; 1], ...
