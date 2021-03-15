@@ -57,15 +57,15 @@ n = Handler_dynamics_generalized_coordinates_model.dof_configuration_space_robot
 % K_table = SRD_LQR_GenerateTable(A_table, B_table, repmat(Q, [1, 1, Count]), repmat(R, [1, 1, Count]));
 
 
-K_table = SRD_CTC_GenerateTable('Handler_dynamics_generalized_coordinates_model', Handler_dynamics_generalized_coordinates_model, ...
-    'Handler_IK_Solution', Handler_IK_Solution, ...
-    'Kp', 200*eye(n), 'Kd', 100*eye(n), 'TimeTable', time_table);
+% K_table = SRD_CTC_GenerateTable('Handler_dynamics_generalized_coordinates_model', Handler_dynamics_generalized_coordinates_model, ...
+%     'Handler_IK_Solution', Handler_IK_Solution, ...
+%     'Kp', 200*eye(n), 'Kd', 100*eye(n), 'TimeTable', time_table);
 
-% 
-% Q = 100*eye(2 * n);
-% R = 0.01*eye(Handler_dynamics_generalized_coordinates_model.dof_control);
-% Count = size(A_table, 3);
-% K_table = SRD_CLQR_GenerateTable(A_table, B_table, repmat(Q, [1, 1, Count]), repmat(R, [1, 1, Count]), N_table);
+
+Q = 100*eye(2 * n);
+R = 0.01*eye(Handler_dynamics_generalized_coordinates_model.dof_control);
+Count = size(A_table, 3);
+K_table = SRD_CLQR_GenerateTable(A_table, B_table, repmat(Q, [1, 1, Count]), repmat(R, [1, 1, Count]), N_table);
 
 
 % %
